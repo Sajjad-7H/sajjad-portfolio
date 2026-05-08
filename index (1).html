@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sajjad Hosen Emon — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root {
+    --bg: #050a0f;
+    --bg2: #080f17;
+    --surface: #0d1a26;
+    --surface2: #112233;
+    --neon: #00f5ff;
+    --neon2: #00ff88;
+    --neon3: #ff006e;
+    --neon4: #7b00ff;
+    --text: #e8f4f8;
+    --text2: #8baabb;
+    --border: rgba(0,245,255,0.15);
+    --glow: 0 0 20px rgba(0,245,255,0.4);
+    --glow2: 0 0 20px rgba(0,255,136,0.3);
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  #cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--neon); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    box-shadow: 0 0 15px var(--neon), 0 0 30px rgba(0,245,255,0.5);
+  }
+  #cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid rgba(0,245,255,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NOISE OVERLAY */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* PDF BUTTON */
+  #pdf-btn {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; font-family: var(--font-mono); font-weight: 700;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; padding: 12px 20px; border-radius: 4px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    box-shadow: var(--glow), 0 0 40px rgba(0,255,136,0.2);
+    transition: all 0.3s; text-decoration: none;
+  }
+  #pdf-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 30px rgba(0,245,255,0.6), 0 0 60px rgba(0,255,136,0.3);
+  }
+  #pdf-btn svg { width:16px; height:16px; }
+
+  /* NAV */
+  nav {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 72px;
+    background: rgba(5,10,15,0.9); backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; z-index: 100; padding: 20px 0;
+  }
+  .nav-item {
+    width: 44px; height: 44px; border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 2px; text-decoration: none;
+    color: var(--text2); transition: all 0.3s; position: relative;
+    font-size: 0.45rem; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .nav-item svg { width: 18px; height: 18px; }
+  .nav-item:hover, .nav-item.active {
+    color: var(--neon); background: rgba(0,245,255,0.08);
+    box-shadow: inset 0 0 20px rgba(0,245,255,0.1);
+  }
+  .nav-item.active::before {
+    content: ''; position: absolute; left: -1px; top: 50%;
+    transform: translateY(-50%); width: 3px; height: 24px;
+    background: var(--neon); border-radius: 0 2px 2px 0;
+    box-shadow: var(--glow);
+  }
+
+  /* MAIN */
+  main {
+    margin-left: 72px;
+    min-height: 100vh;
+    position: relative; z-index: 1;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: 80px 60px;
+    position: relative;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--neon);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 80px; height: 1px;
+    background: linear-gradient(90deg, var(--neon), transparent);
+  }
+
+  /* HERO */
+  #home {
+    display: flex; align-items: center; min-height: 100vh;
+    padding: 80px 60px;
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; width: 100%;
+  }
+  .hero-name {
+    font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 800; line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .hero-name .highlight {
+    display: block;
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-title {
+    margin-top: 20px; font-size: 0.85rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text2);
+  }
+  .hero-title span { color: var(--neon); }
+  .hero-desc {
+    margin-top: 24px; font-size: 0.9rem; line-height: 1.8;
+    color: var(--text2); font-family: var(--font-display); font-weight: 400;
+    max-width: 460px;
+  }
+  .hero-btns {
+    margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .btn-neon {
+    padding: 14px 32px; font-family: var(--font-mono); font-size: 0.75rem;
+    letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+    border-radius: 4px; transition: all 0.3s; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    border: none;
+  }
+  .btn-neon.primary {
+    background: var(--neon); color: #000;
+    box-shadow: var(--glow), 0 4px 20px rgba(0,245,255,0.2);
+  }
+  .btn-neon.primary:hover {
+    background: #fff; box-shadow: 0 0 40px rgba(0,245,255,0.8);
+    transform: translateY(-2px);
+  }
+  .btn-neon.secondary {
+    background: transparent; color: var(--neon);
+    border: 1px solid var(--neon);
+    box-shadow: inset 0 0 20px rgba(0,245,255,0.05);
+  }
+  .btn-neon.secondary:hover {
+    background: rgba(0,245,255,0.1);
+    box-shadow: var(--glow);
+    transform: translateY(-2px);
+  }
+
+  .hero-status {
+    margin-top: 40px; display: flex; align-items: center; gap: 10px;
+    font-size: 0.75rem; color: var(--text2);
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--neon2);
+    box-shadow: 0 0 10px var(--neon2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  /* CODE CARD */
+  .code-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(0,245,255,0.1);
+  }
+  .code-topbar {
+    background: var(--surface2); padding: 12px 20px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .code-filename {
+    margin-left: 8px; font-size: 0.7rem; color: var(--text2); letter-spacing: 0.05em;
+  }
+  .code-body { padding: 28px; font-size: 0.78rem; line-height: 1.9; overflow-x: auto; }
+  .c-kw { color: #ff79c6; }
+  .c-fn { color: var(--neon); }
+  .c-str { color: var(--neon2); }
+  .c-prop { color: #8be9fd; }
+  .c-num { color: #bd93f9; }
+  .c-cm { color: #6272a4; font-style: italic; }
+
+  /* SECTION HEADING */
+  .sec-heading {
+    font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800; color: var(--text); margin-bottom: 60px;
+    letter-spacing: -0.02em;
+  }
+  .sec-heading span { color: var(--neon); }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px;
+  }
+  .skill-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--neon), var(--neon2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-card:hover {
+    border-color: rgba(0,245,255,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), var(--glow);
+  }
+  .skill-card-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1rem; color: var(--text); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .skill-icon-badge {
+    width: 32px; height: 32px; background: rgba(0,245,255,0.1);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    padding: 6px 14px; font-size: 0.7rem; letter-spacing: 0.05em;
+    background: rgba(0,245,255,0.07); border: 1px solid rgba(0,245,255,0.15);
+    border-radius: 20px; color: var(--text2);
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .skill-tag:hover { background: rgba(0,245,255,0.15); color: var(--neon); }
+  .skill-tag i { font-size: 1rem; }
+
+  /* EXPERIENCE */
+  #experience { background: var(--bg); }
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(180deg, var(--neon), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 40px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; transition: all 0.3s;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -48px; top: 32px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--neon); border: 3px solid var(--bg);
+    box-shadow: var(--glow);
+  }
+  .timeline-item:hover {
+    border-color: rgba(0,245,255,0.3);
+    transform: translateX(4px);
+    box-shadow: var(--glow);
+  }
+  .tl-role {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .tl-company { color: var(--neon); font-size: 0.8rem; letter-spacing: 0.1em; }
+  .tl-date {
+    font-size: 0.7rem; color: var(--text2); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-top: 4px; margin-bottom: 14px;
+  }
+  .tl-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.7; }
+
+  /* EDUCATION */
+  #education { background: var(--bg2); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+  .edu-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .edu-card::after {
+    content: attr(data-year);
+    position: absolute; right: 20px; bottom: 16px;
+    font-size: 4rem; font-family: var(--font-display); font-weight: 800;
+    color: rgba(0,245,255,0.04); line-height: 1;
+    pointer-events: none;
+  }
+  .edu-card:hover {
+    border-color: rgba(0,245,255,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  .edu-degree {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1rem; color: var(--text); margin-bottom: 8px;
+  }
+  .edu-school { color: var(--neon); font-size: 0.8rem; letter-spacing: 0.05em; }
+  .edu-year { font-size: 0.7rem; color: var(--text2); margin-top: 6px; }
+  .edu-badge {
+    display: inline-block; margin-top: 16px;
+    padding: 4px 12px; font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 20px;
+    background: rgba(0,255,136,0.1); color: var(--neon2);
+    border: 1px solid rgba(0,255,136,0.2);
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 24px; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px; transition: all 0.3s;
+    position: relative; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .project-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(0,245,255,0.05), transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-card:hover {
+    border-color: rgba(0,245,255,0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5), var(--glow);
+  }
+  .project-num {
+    font-size: 0.65rem; letter-spacing: 0.2em; color: var(--neon);
+    text-transform: uppercase; margin-bottom: 14px; font-weight: 700;
+  }
+  .project-name {
+    font-family: var(--font-display); font-weight: 800; font-size: 1.2rem;
+    color: var(--text); margin-bottom: 12px; line-height: 1.2;
+  }
+  .project-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; flex: 1; }
+  .project-tech {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+  }
+  .tech-pill {
+    padding: 4px 12px; font-size: 0.65rem; letter-spacing: 0.08em;
+    background: rgba(123,0,255,0.12); color: #a78bfa;
+    border: 1px solid rgba(123,0,255,0.25); border-radius: 20px;
+  }
+  .project-links {
+    display: flex; gap: 12px; margin-top: 24px;
+  }
+  .proj-link {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--neon); text-decoration: none; font-weight: 700;
+    display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+    padding: 8px 16px; border: 1px solid rgba(0,245,255,0.2);
+    border-radius: 4px;
+  }
+  .proj-link:hover {
+    background: rgba(0,245,255,0.1); box-shadow: var(--glow);
+  }
+
+  /* CONTACT */
+  #contact { background: var(--bg2); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-tagline {
+    font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 24px;
+  }
+  .contact-tagline span { color: var(--neon); }
+  .contact-text { font-size: 0.85rem; color: var(--text2); line-height: 1.8; margin-bottom: 36px; }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    color: var(--text2); text-decoration: none; font-size: 0.82rem;
+    padding: 16px 20px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--surface);
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    border-color: rgba(0,245,255,0.3); color: var(--neon);
+    transform: translateX(6px); box-shadow: var(--glow);
+  }
+  .contact-link-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(0,245,255,0.1); display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--neon); }
+  .form-input {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 18px; color: var(--text);
+    font-family: var(--font-mono); font-size: 0.82rem;
+    transition: all 0.3s; outline: none;
+  }
+  .form-input:focus {
+    border-color: var(--neon); box-shadow: 0 0 0 3px rgba(0,245,255,0.1);
+  }
+  textarea.form-input { min-height: 120px; resize: vertical; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 30px 60px; margin-left: 72px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .footer-brand {
+    font-family: var(--font-display); font-size: 1rem;
+    font-weight: 800; color: var(--neon);
+  }
+  .footer-text { font-size: 0.72rem; color: var(--text2); letter-spacing: 0.05em; }
+
+  /* SCROLL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 2px; }
+
+  /* ── MOBILE BOTTOM NAV ── */
+  #mobile-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(5,10,15,0.96); backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  }
+  .mobile-nav-inner {
+    display: flex; justify-content: space-around; align-items: center;
+  }
+  .mob-nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    text-decoration: none; color: var(--text2); font-size: 0.5rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 8px; transition: all 0.25s;
+    min-width: 48px;
+  }
+  .mob-nav-item svg { width: 20px; height: 20px; }
+  .mob-nav-item.active, .mob-nav-item:hover {
+    color: var(--neon);
+    background: rgba(0,245,255,0.08);
+  }
+
+  /* ── RESPONSIVE BREAKPOINTS ── */
+
+  /* Tablet */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    #mobile-nav { display: block; }
+    main { margin-left: 0; padding-bottom: 80px; }
+    footer { margin-left: 0; padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+    #pdf-btn {
+      top: 12px; right: 12px;
+      padding: 10px 14px; font-size: 0.65rem;
+    }
+    #pdf-btn span { display: none; }
+
+    section { padding: 60px 28px; min-height: unset; }
+    #home { padding: 80px 28px 60px; min-height: 100svh; }
+
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-name { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .contact-tagline { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    #cursor, #cursor-ring { display: none; }
+    body { cursor: auto; }
+
+    #pdf-btn {
+      top: 10px; right: 10px;
+      padding: 9px 13px; gap: 0;
+      border-radius: 50%; width: 42px; height: 42px;
+      justify-content: center;
+    }
+    #pdf-btn svg { width: 18px; height: 18px; }
+
+    section { padding: 50px 20px; }
+    #home { padding: 70px 20px 50px; }
+
+    .hero-name { font-size: clamp(2.4rem, 12vw, 3.5rem); line-height: 1; }
+    .hero-title { font-size: 0.72rem; letter-spacing: 0.12em; }
+    .hero-desc { font-size: 0.82rem; }
+    .hero-btns { flex-direction: column; gap: 12px; }
+    .btn-neon { width: 100%; justify-content: center; padding: 14px 24px; }
+
+    .code-card { display: none; }
+
+    .sec-heading { font-size: clamp(1.7rem, 7vw, 2.4rem); margin-bottom: 36px; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+
+    .timeline { padding-left: 28px; }
+    .timeline-item::before { left: -36px; }
+    .timeline-item { padding: 20px; }
+
+    .skill-card { padding: 20px; }
+    .project-card { padding: 22px; }
+    .edu-card { padding: 22px; }
+
+    .contact-inner { gap: 36px; }
+    .contact-link { font-size: 0.75rem; padding: 12px 16px; word-break: break-all; }
+
+    footer {
+      flex-direction: column; gap: 8px; text-align: center;
+      padding: 20px; padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+  }
+
+  /* Very small screens */
+  @media (max-width: 380px) {
+    .hero-name { font-size: 2.2rem; }
+    section { padding: 44px 16px; }
+    .mob-nav-item { padding: 4px 8px; min-width: 40px; font-size: 0.42rem; }
+  }
+
+  /* ADMIN SYSTEM */
+  #admin-toggle {
+    position: fixed; top: 8px; left: 50%; right: auto; transform: translateX(-50%); z-index: 1200;
+    background: rgba(13,26,38,0.92); color: var(--neon);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px 18px; font-family: var(--font-mono); font-weight: 700;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; box-shadow: inset 0 0 20px rgba(0,245,255,0.06);
+  }
+  #admin-toggle:hover { background: rgba(0,245,255,0.12); box-shadow: var(--glow); transform: translateX(-50%) translateY(-1px); }
+  #admin-panel {
+    position: fixed; top: 58px; right: 20px; width: min(380px, calc(100vw - 40px));
+    max-height: calc(100vh - 92px); overflow-y: auto; z-index: 1001;
+    background: rgba(5,10,15,0.96); border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6), var(--glow); backdrop-filter: blur(20px);
+    padding: 18px; display: none;
+  }
+  #admin-panel.open { display: block; }
+  .admin-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .admin-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--text); }
+  .admin-close { width: 32px; height: 32px; border: 1px solid var(--border); background: transparent; color: var(--neon); border-radius: 6px; cursor: pointer; }
+  .admin-box { border: 1px solid rgba(0,245,255,0.12); border-radius: 8px; padding: 14px; margin-top: 12px; background: rgba(17,34,51,0.55); }
+  .admin-label { display: block; color: var(--text2); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .admin-input, .admin-textarea {
+    width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-family: var(--font-mono); font-size: 0.78rem; padding: 11px 12px; outline: none;
+  }
+  .admin-textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+  .admin-input:focus, .admin-textarea:focus { border-color: var(--neon); box-shadow: 0 0 0 2px rgba(0,245,255,0.12); }
+  .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .admin-btn {
+    border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;
+    background: rgba(0,245,255,0.08); color: var(--text); font-family: var(--font-mono);
+    font-size: 0.72rem; font-weight: 700; cursor: pointer; flex: 1;
+  }
+  .admin-btn.primary { background: var(--neon); color: #000; border-color: var(--neon); }
+  .admin-btn.danger { color: #ff7b9b; border-color: rgba(255,0,110,0.35); background: rgba(255,0,110,0.08); }
+  .admin-note { margin-top: 10px; color: var(--text2); font-size: 0.68rem; line-height: 1.55; }
+  .admin-status { color: var(--neon2); font-size: 0.72rem; min-height: 18px; margin-top: 10px; }
+  .admin-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .admin-file { width: 100%; color: var(--text2); font-size: 0.72rem; }
+  .admin-section-name { color: var(--neon); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 18px 0 10px; }
+  .admin-divider { height: 1px; background: var(--border); margin: 14px 0; }
+  body.admin-bg-photo {
+    background-image: linear-gradient(rgba(5,10,15,0.78), rgba(5,10,15,0.88)), var(--admin-bg-photo);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  body.admin-bg-photo::before { opacity: 0.55; }
+  body.admin-bg-photo section { background: rgba(5,10,15,0.72) !important; }
+  body.admin-bg-photo .skill-card, body.admin-bg-photo .timeline-item, body.admin-bg-photo .edu-card, body.admin-bg-photo .project-card, body.admin-bg-photo .contact-link { background: rgba(13,26,38,0.82); backdrop-filter: blur(12px); }
+  .admin-color-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .admin-color-grid input { width: 100%; height: 38px; border: 1px solid var(--border); background: transparent; border-radius: 6px; cursor: pointer; }
+  body.admin-mode [data-admin-editable="true"] { outline: 1px dashed rgba(0,245,255,0.5); outline-offset: 3px; cursor: text; }
+  body.admin-mode [data-admin-editable="true"]:hover { outline-color: var(--neon2); background: rgba(0,245,255,0.05); }
+  body.admin-mode .admin-selected { outline: 2px solid var(--neon2) !important; box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+
+  @media (max-width: 900px) {
+    #admin-toggle { top: 8px; left: 50%; right: auto; padding: 10px 12px; font-size: 0.62rem; }
+    #admin-panel { top: 56px; right: 12px; width: calc(100vw - 24px); }
+    .admin-field-row { grid-template-columns: 1fr; }
+  }
+  @media print {
+    #admin-toggle, #admin-panel { display: none !important; }
+  }
+
+  /* SUPPORT ASSISTANT */
+  #support-toggle {
+    position: fixed; right: 22px; bottom: 24px; z-index: 950;
+    width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--neon), var(--neon2)); color: #001014;
+    font-family: var(--font-mono); font-weight: 800; cursor: pointer;
+    box-shadow: var(--glow), 0 14px 42px rgba(0,0,0,0.45);
+  }
+  #support-widget {
+    position: fixed; right: 22px; bottom: 94px; z-index: 951;
+    width: min(360px, calc(100vw - 28px)); height: 480px; max-height: calc(100vh - 140px);
+    display: none; flex-direction: column; overflow: hidden;
+    background: rgba(5,10,15,0.96); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6), var(--glow); backdrop-filter: blur(18px);
+  }
+  #support-widget.open { display: flex; }
+  .support-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .support-title { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--text); }
+  .support-subtitle { color: var(--text2); font-size: 0.66rem; margin-top: 3px; }
+  .support-close { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--neon); cursor: pointer; }
+  #support-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .support-msg { max-width: 86%; padding: 10px 12px; border-radius: 10px; font-size: 0.78rem; line-height: 1.55; }
+  .support-msg.bot { align-self: flex-start; background: rgba(0,245,255,0.08); color: var(--text); border: 1px solid var(--border); }
+  .support-msg.user { align-self: flex-end; background: var(--neon); color: #001014; font-weight: 700; }
+  #support-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); background: rgba(13,26,38,0.75); }
+  #support-input { flex: 1; min-width: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); padding: 11px; font-family: var(--font-mono); font-size: 0.76rem; outline: none; }
+  #support-form button { width: 52px; border-radius: 8px; border: none; background: var(--neon2); color: #001014; font-weight: 800; cursor: pointer; }
+  .admin-reply-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .admin-reply-item { border: 1px solid var(--border); border-radius: 8px; padding: 10px; background: rgba(5,10,15,0.45); }
+  .admin-reply-key { color: var(--neon); font-size: 0.7rem; margin-bottom: 4px; word-break: break-word; }
+  .admin-reply-text { color: var(--text2); font-size: 0.7rem; line-height: 1.45; }
+  @media (max-width: 600px) {
+    #support-toggle { right: 16px; bottom: 92px; width: 52px; height: 52px; }
+    #support-widget { right: 10px; bottom: 150px; height: 430px; }
+  }
+  /* PRINT / PDF */
+  @media print {
+    #pdf-btn, nav, #mobile-nav, #cursor, #cursor-ring { display: none !important; }
+    main { margin-left: 0 !important; padding-bottom: 0 !important; }
+    footer { margin-left: 0 !important; padding-bottom: 0 !important; }
+    section { min-height: unset; page-break-inside: avoid; }
+    body { background: #fff; color: #000; }
+    :root {
+      --bg: #fff; --bg2: #f5f5f5; --surface: #eee;
+      --text: #111; --text2: #444; --neon: #0066ff;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- PDF DOWNLOAD BUTTON -->
+<button id="pdf-btn" onclick="downloadPDF()">
+  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+  </svg>
+  Download PDF
+</button>
+
+<!-- SIDEBAR NAV -->
+<nav>
+  <a href="#home" class="nav-item active" title="Home">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </a>
+  <a href="#skills" class="nav-item" title="Skills">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+    Skills
+  </a>
+  <a href="#experience" class="nav-item" title="Experience">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+    Exp
+  </a>
+  <a href="#education" class="nav-item" title="Education">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+    Edu
+  </a>
+  <a href="#projects" class="nav-item" title="Projects">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+    Projects
+  </a>
+  <a href="#contact" class="nav-item" title="Contact">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    Contact
+  </a>
+</nav>
+
+<!-- MOBILE BOTTOM NAV -->
+<div id="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="#home" class="mob-nav-item active">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="#skills" class="mob-nav-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+      Skills
+    </a>
+    <a href="#experience" class="mob-nav-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      Exp
+    </a>
+    <a href="#projects" class="mob-nav-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+      Projects
+    </a>
+    <a href="#contact" class="mob-nav-item">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Contact
+    </a>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN / EDIT PANEL -->
+<button id="admin-toggle" type="button">Admin</button>
+<aside id="admin-panel" aria-label="Admin system">
+  <div class="admin-head">
+    <div class="admin-title">Admin System</div>
+    <button class="admin-close" type="button" id="admin-close">X</button>
+  </div>
+
+  <form id="admin-login" class="admin-box">
+    <label class="admin-label" for="admin-email">Email</label>
+    <input class="admin-input" id="admin-email" type="email" autocomplete="username" placeholder="Enter admin email">
+    <label class="admin-label" for="admin-pass" style="margin-top:12px;">Password</label>
+    <input class="admin-input" id="admin-pass" type="password" autocomplete="current-password" placeholder="Enter password">
+    <div class="admin-actions">
+      <button class="admin-btn primary" type="submit">Login</button>
+    </div>
+    <div class="admin-note">Only the admin can login here. Email and password are hidden.</div>
+  </form>
+
+  <div id="admin-tools" style="display:none;">
+    <div class="admin-box">
+      <label class="admin-label">Content Editor</label>
+      <div class="admin-actions">
+        <button class="admin-btn primary" id="admin-edit-mode" type="button">Edit Mode: Off</button>
+        <button class="admin-btn" id="admin-save" type="button">Save</button>
+      </div>
+      <div class="admin-note">Turn Edit Mode on, click any page text or link, change it below, then apply and save.</div>
+      <div id="admin-target" class="admin-note">No item selected.</div>
+      <label class="admin-label" for="admin-text" style="margin-top:12px;">Selected Text</label>
+      <textarea class="admin-textarea" id="admin-text" placeholder="Select text from page"></textarea>
+      <label class="admin-label" for="admin-link" style="margin-top:12px;">Selected Link URL</label>
+      <input class="admin-input" id="admin-link" type="text" placeholder="Only appears for links/buttons">
+      <div class="admin-actions">
+        <button class="admin-btn primary" id="admin-apply" type="button">Apply Change</button>
+      </div>
+    </div>
+
+    <div class="admin-box">
+      <label class="admin-label">Design Colors</label>
+      <div class="admin-color-grid">
+        <div><label class="admin-label" for="color-bg">Background</label><input id="color-bg" type="color" data-var="--bg"></div>
+        <div><label class="admin-label" for="color-bg2">Section BG</label><input id="color-bg2" type="color" data-var="--bg2"></div>
+        <div><label class="admin-label" for="color-neon">Main Color</label><input id="color-neon" type="color" data-var="--neon"></div>
+        <div><label class="admin-label" for="color-neon2">Accent</label><input id="color-neon2" type="color" data-var="--neon2"></div>
+        <div><label class="admin-label" for="color-text">Text</label><input id="color-text" type="color" data-var="--text"></div>
+        <div><label class="admin-label" for="color-text2">Muted Text</label><input id="color-text2" type="color" data-var="--text2"></div>
+      </div>
+    </div>
+
+
+    <div class="admin-box">
+      <label class="admin-label">Background Photo Design</label>
+      <input class="admin-file" id="admin-bg-upload" type="file" accept="image/*">
+      <div class="admin-actions">
+        <button class="admin-btn danger" id="admin-bg-remove" type="button">Remove Background Photo</button>
+      </div>
+      <div class="admin-note">Upload a photo to change the full page background design.</div>
+    </div>
+
+    <div class="admin-box">
+      <label class="admin-label">Add New Items</label>
+
+      <div class="admin-section-name">GitHub Project</div>
+      <input class="admin-input" id="add-project-name" type="text" placeholder="Project name">
+      <textarea class="admin-textarea" id="add-project-desc" placeholder="Project description"></textarea>
+      <input class="admin-input" id="add-project-tech" type="text" placeholder="Technologies: HTML, CSS, JavaScript" style="margin-top:10px;">
+      <input class="admin-input" id="add-project-github" type="url" placeholder="GitHub URL" style="margin-top:10px;">
+      <input class="admin-input" id="add-project-live" type="url" placeholder="Live demo URL (optional)" style="margin-top:10px;">
+      <div class="admin-actions"><button class="admin-btn primary" id="add-project-btn" type="button">Add Project</button></div>
+
+      <div class="admin-divider"></div>
+      <div class="admin-section-name">Skill Section</div>
+      <div class="admin-field-row">
+        <input class="admin-input" id="add-skill-icon" type="text" placeholder="Icon / emoji">
+        <input class="admin-input" id="add-skill-title" type="text" placeholder="Skill title">
+      </div>
+      <input class="admin-input" id="add-skill-tags" type="text" placeholder="Tags: React, Node, MongoDB" style="margin-top:10px;">
+      <div class="admin-actions"><button class="admin-btn primary" id="add-skill-btn" type="button">Add Skill</button></div>
+
+      <div class="admin-divider"></div>
+      <div class="admin-section-name">Experience Section</div>
+      <input class="admin-input" id="add-exp-role" type="text" placeholder="Role title">
+      <input class="admin-input" id="add-exp-company" type="text" placeholder="Company / place" style="margin-top:10px;">
+      <input class="admin-input" id="add-exp-date" type="text" placeholder="Date / location" style="margin-top:10px;">
+      <textarea class="admin-textarea" id="add-exp-desc" placeholder="Experience description"></textarea>
+      <div class="admin-actions"><button class="admin-btn primary" id="add-exp-btn" type="button">Add Experience</button></div>
+
+      <div class="admin-divider"></div>
+      <div class="admin-section-name">Education Section</div>
+      <input class="admin-input" id="add-edu-degree" type="text" placeholder="Degree / certificate">
+      <input class="admin-input" id="add-edu-school" type="text" placeholder="School / university" style="margin-top:10px;">
+      <div class="admin-field-row" style="margin-top:10px;">
+        <input class="admin-input" id="add-edu-year" type="text" placeholder="Year">
+        <input class="admin-input" id="add-edu-badge" type="text" placeholder="Badge text">
+      </div>
+      <div class="admin-actions"><button class="admin-btn primary" id="add-edu-btn" type="button">Add Education</button></div>
+
+      <div class="admin-divider"></div>
+      <div class="admin-section-name">Contact Section</div>
+      <input class="admin-input" id="add-contact-label" type="text" placeholder="Contact label">
+      <input class="admin-input" id="add-contact-url" type="text" placeholder="mailto:email@example.com or https://..." style="margin-top:10px;">
+      <div class="admin-actions"><button class="admin-btn primary" id="add-contact-btn" type="button">Add Contact</button></div>
+    </div>
+    <div class="admin-box">
+      <label class="admin-label">Support Assistant Replies</label>
+      <div class="admin-note">Add keyword based replies. If a visitor message matches a keyword, the assistant will reply automatically.</div>
+      <input class="admin-input" id="assistant-keywords" type="text" placeholder="Keywords: hire, price, project">
+      <textarea class="admin-textarea" id="assistant-reply" placeholder="Assistant reply text"></textarea>
+      <div class="admin-actions">
+        <button class="admin-btn primary" id="assistant-add-reply" type="button">Add Reply</button>
+        <button class="admin-btn" id="assistant-save-fallback" type="button">Save Default Reply</button>
+      </div>
+      <label class="admin-label" for="assistant-fallback" style="margin-top:12px;">Default Reply</label>
+      <textarea class="admin-textarea" id="assistant-fallback" placeholder="Default reply when no keyword matches"></textarea>
+      <div class="admin-reply-list" id="assistant-reply-list"></div>
+    </div>
+    <div class="admin-box">
+      <label class="admin-label">Admin Actions</label>
+      <div class="admin-actions">
+        <button class="admin-btn" id="admin-export" type="button">Download Edited HTML</button>
+        <button class="admin-btn danger" id="admin-reset" type="button">Reset All</button>
+        <button class="admin-btn" id="admin-logout" type="button">Logout</button>
+      </div>
+      <div class="admin-status" id="admin-status"></div>
+    </div>
+  </div>
+</aside>
+<main id="portfolio-content">
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-inner">
+      <div class="reveal">
+        <div class="section-label">Portfolio 2025</div>
+        <h1 class="hero-name">
+          Sajjad<br>
+          <span class="highlight">Hosen Emon</span>
+        </h1>
+        <p class="hero-title">
+          <span>//</span> Full-Stack Developer &nbsp;|&nbsp; MERN &nbsp;|&nbsp; Laravel
+        </p>
+        <p class="hero-desc">
+          Building performant web experiences with clean code. Problem solver, team leader, and passionate engineer from Bangladesh.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-neon primary">View Projects →</a>
+          <a href="#contact" class="btn-neon secondary">Hire Me</a>
+        </div>
+        <div class="hero-status">
+          <div class="status-dot"></div>
+          Available for freelance &amp; full-time roles
+        </div>
+      </div>
+      <div class="code-card reveal" style="transition-delay:0.2s">
+        <div class="code-topbar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <span class="code-filename">profile.js</span>
+        </div>
+        <div class="code-body"><pre><code><span class="c-kw">const</span> <span class="c-fn">sajjad</span> = {
+  <span class="c-prop">name</span>: <span class="c-str">"Sajjad Hosen Emon"</span>,
+  <span class="c-prop">role</span>: <span class="c-str">"Full-Stack Developer"</span>,
+  <span class="c-prop">stack</span>: [
+    <span class="c-str">"HTML5"</span>, <span class="c-str">"CSS3"</span>, <span class="c-str">"JavaScript"</span>,
+    <span class="c-str">"PHP"</span>, <span class="c-str">"Laravel"</span>, <span class="c-str">"MySQL"</span>,
+    <span class="c-str">"Bootstrap"</span>, <span class="c-str">"Git"</span>
+  ],
+  <span class="c-prop">location</span>: <span class="c-str">"Chittagong, Bangladesh"</span>,
+  <span class="c-prop">hireable</span>: <span class="c-kw">true</span>,
+  <span class="c-prop">openToWork</span>: <span class="c-kw">true</span>,
+
+  <span class="c-fn">greet</span>() {
+    <span class="c-kw">return</span> <span class="c-str">`Hello World! 👋`</span>;
+  }
+};</code></pre></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="section-label">What I Know</div>
+      <h2 class="sec-heading">Technical <span>Skills</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal" style="transition-delay:0.1s">
+        <div class="skill-card-title">
+          <div class="skill-icon-badge">🖥️</div>
+          Frontend Development
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-html5-plain colored"></i> HTML5</span>
+          <span class="skill-tag"><i class="devicon-css3-plain colored"></i> CSS3</span>
+          <span class="skill-tag"><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+          <span class="skill-tag"><i class="devicon-bootstrap-plain colored"></i> Bootstrap</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.2s">
+        <div class="skill-card-title">
+          <div class="skill-icon-badge">⚙️</div>
+          Backend Development
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-php-plain colored"></i> PHP</span>
+          <span class="skill-tag"><i class="devicon-laravel-plain colored"></i> Laravel</span>
+          <span class="skill-tag"><i class="devicon-mysql-plain colored"></i> MySQL</span>
+          <span class="skill-tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.3s">
+        <div class="skill-card-title">
+          <div class="skill-icon-badge">🛠️</div>
+          Tools & DevOps
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class="devicon-git-plain colored"></i> Git</span>
+          <span class="skill-tag"><i class="devicon-github-original colored"></i> GitHub</span>
+          <span class="skill-tag"><i class="devicon-vscode-plain colored"></i> VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.4s">
+        <div class="skill-card-title">
+          <div class="skill-icon-badge">💡</div>
+          Soft Skills
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Team Leadership</span>
+          <span class="skill-tag">Problem Solving</span>
+          <span class="skill-tag">Quick Learner</span>
+          <span class="skill-tag">Communication</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <div class="section-label">Work History</div>
+      <h2 class="sec-heading">Work <span>Experience</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="tl-role">Team Leader</div>
+        <div class="tl-company">Nexxen Group</div>
+        <div class="tl-date">📅 Jan 2025 — Present · Bangladesh</div>
+        <div class="tl-desc">Leading team initiatives, coordinating on projects, and ensuring team cohesion and productivity across multiple workstreams.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-role">Web Developer & Designer (Training)</div>
+        <div class="tl-company">IT Career Solution</div>
+        <div class="tl-date">📅 Sep 2024 — Present · Bangladesh</div>
+        <div class="tl-desc">Intensive training in modern web development stacks, including advanced front-end and back-end technologies. Building real-world projects.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-role">Cryptocurrency Trader</div>
+        <div class="tl-company">Binance · KuCoin · International</div>
+        <div class="tl-date">📅 May 2022 — Present</div>
+        <div class="tl-desc">Actively trading on major platforms, analyzing market trends and executing data-driven strategies in volatile crypto markets.</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="tl-role">Marketing Officer</div>
+        <div class="tl-company">JRS Corporation BD</div>
+        <div class="tl-date">📅 Jan 2020 — Jul 2022 · Bangladesh</div>
+        <div class="tl-desc">Developed and executed marketing campaigns to drive brand growth and customer acquisition.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="reveal">
+      <div class="section-label">Academic Background</div>
+      <h2 class="sec-heading">My <span>Education</span></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal" data-year="BSc">
+        <div class="edu-degree">BSc in Computer Software Engineering</div>
+        <div class="edu-school">Premier University, Chittagong</div>
+        <div class="edu-year">2021 — 2025</div>
+        <span class="edu-badge">🎓 Undergraduate</span>
+      </div>
+      <div class="edu-card reveal" data-year="HSC">
+        <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+        <div class="edu-school">Omar Gani M.E.S College</div>
+        <div class="edu-year">2018 — 2020</div>
+        <span class="edu-badge">📚 Science</span>
+      </div>
+      <div class="edu-card reveal" data-year="SSC">
+        <div class="edu-degree">Secondary School Certificate (SSC)</div>
+        <div class="edu-school">Shah Waliullah Institute</div>
+        <div class="edu-year">2016 — 2018</div>
+        <span class="edu-badge">🏫 Completed</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="section-label">What I've Built</div>
+      <h2 class="sec-heading">GitHub <span>Projects</span></h2>
+    </div>
+    <div class="projects-grid">
+
+      <!-- GitHub SVG reusable snippet inline -->
+
+      <!-- Project 01 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 01</div>
+        <div class="project-name">SMS Boomber</div>
+        <div class="project-desc">An SMS bombing tool that sends bulk messages to a target number for testing and educational purposes.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/sms-boomber" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 02 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 02</div>
+        <div class="project-name">IELTS Preparation</div>
+        <div class="project-desc">A resource and practice tool designed to help learners prepare effectively for the IELTS examination.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/ielts" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 03 -->
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <div class="project-num">Project / 03</div>
+        <div class="project-name">Voice</div>
+        <div class="project-desc">A voice-based interactive application enabling speech input and output functionalities for enhanced user interaction.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Speech API</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/voice" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 04 -->
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <div class="project-num">Project / 04</div>
+        <div class="project-name">Image For</div>
+        <div class="project-desc">An image processing and generation project that handles image manipulation and display for various use cases.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">PIL</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/image-for" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 05 -->
+      <div class="project-card reveal" style="transition-delay:0.25s">
+        <div class="project-num">Project / 05</div>
+        <div class="project-name">Voice Particle Morph</div>
+        <div class="project-desc">A creative audio-visual project that morphs particle animations in real-time based on voice input and sound frequencies.</div>
+        <div class="project-tech">
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">Web Audio API</span>
+          <span class="tech-pill">Canvas</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/voice-particle-morph" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 06 -->
+      <div class="project-card reveal" style="transition-delay:0.3s">
+        <div class="project-num">Project / 06</div>
+        <div class="project-name">Emotion Detection in Bangla-Banglish Text</div>
+        <div class="project-desc">Deep learning model using RNN, LSTM and BiLSTM architectures to detect emotions from Bangla and Banglish (Bengali-English mixed) text data.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">RNN</span>
+          <span class="tech-pill">LSTM</span>
+          <span class="tech-pill">BiLSTM</span>
+          <span class="tech-pill">NLP</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/-Emotion-Detection-in-Bangla-Banglish-Text-Using-RNN-LSTM-and-BiLSTM-" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 07 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 07</div>
+        <div class="project-name">Sajjad Portfolio</div>
+        <div class="project-desc">Personal developer portfolio website with animated UI, custom cursor, dark theme, and interactive sections showcasing skills, experience and projects.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/sajjad-portfolio" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 08 -->
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <div class="project-num">Project / 08</div>
+        <div class="project-name">Love Me</div>
+        <div class="project-desc">A fun and creative interactive web project with a romantic theme, animations, and playful UI elements.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/love-me" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 09 -->
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <div class="project-num">Project / 09</div>
+        <div class="project-name">Slide Moving</div>
+        <div class="project-desc">An animated sliding UI component or presentation project featuring smooth transitions and engaging visual effects.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/slide_moving" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 10 -->
+      <div class="project-card reveal" style="transition-delay:0.25s">
+        <div class="project-num">Project / 10</div>
+        <div class="project-name">TinyML — Harvard University Course</div>
+        <div class="project-desc">Projects and exercises from Harvard University's TinyML course, covering machine learning on embedded and edge devices.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">TensorFlow Lite</span>
+          <span class="tech-pill">TinyML</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/Course--TinyML-Harvard-University-" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 11 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 11</div>
+        <div class="project-name">Mobile Image-Based Flower Classification</div>
+        <div class="project-desc">A mobile-friendly deep learning app that classifies flower species from images using CNN and MobileNetV2 architecture.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">CNN</span>
+          <span class="tech-pill">MobileNetV2</span>
+          <span class="tech-pill">TensorFlow</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/Mobile-Image-Based-Flower-Classification-Using-CNN-and-MobileNetV2" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 12 -->
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <div class="project-num">Project / 12</div>
+        <div class="project-name">Bangla Speech Emotion Recognition</div>
+        <div class="project-desc">A machine learning project for recognizing human emotions from Bangla speech using audio signal processing and classification models.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Machine Learning</span>
+          <span class="tech-pill">Audio Processing</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/Bangla-Speech-Emotion-Recognition-MLL" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 13 -->
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <div class="project-num">Project / 13</div>
+        <div class="project-name">Calculator</div>
+        <div class="project-desc">A clean, fully functional calculator web app with a modern UI supporting basic and advanced arithmetic operations.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/calculator" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 14 -->
+      <div class="project-card reveal" style="transition-delay:0.25s">
+        <div class="project-num">Project / 14</div>
+        <div class="project-name">Happy</div>
+        <div class="project-desc">A cheerful interactive web project with fun animations, positive vibes, and engaging user interactions.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/happy" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 15 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 15</div>
+        <div class="project-name">Auto Visual Builder</div>
+        <div class="project-desc">An automated tool for generating and building visual components or UI layouts programmatically with minimal manual effort.</div>
+        <div class="project-tech">
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/auto-visual-builder" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 16 -->
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <div class="project-num">Project / 16</div>
+        <div class="project-name">Ads</div>
+        <div class="project-desc">An advertisement display or management project for creating and rendering digital ad creatives on the web.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/ads" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 17 -->
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <div class="project-num">Project / 17</div>
+        <div class="project-name">Pattern Recognition</div>
+        <div class="project-desc">A machine learning project implementing pattern recognition algorithms to identify and classify data patterns and features.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Machine Learning</span>
+          <span class="tech-pill">Scikit-learn</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/Pattern-Recognition" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 18 -->
+      <div class="project-card reveal" style="transition-delay:0.25s">
+        <div class="project-num">Project / 18</div>
+        <div class="project-name">Evermart</div>
+        <div class="project-desc">An e-commerce web application with product listings, shopping cart, and order management features for an online marketplace.</div>
+        <div class="project-tech">
+          <span class="tech-pill">PHP</span>
+          <span class="tech-pill">MySQL</span>
+          <span class="tech-pill">Bootstrap</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/Evermart" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 19 -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-num">Project / 19</div>
+        <div class="project-name">Stickers</div>
+        <div class="project-desc">A fun sticker creation or collection web app for designing, displaying, and sharing custom stickers.</div>
+        <div class="project-tech">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/stickers" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 20 -->
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <div class="project-num">Project / 20</div>
+        <div class="project-name">Pattern Recognition Lab (PRL)</div>
+        <div class="project-desc">A laboratory project focused on implementing and experimenting with various pattern recognition techniques and algorithms.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Machine Learning</span>
+          <span class="tech-pill">NumPy</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Sajjad-7H/pattern-Recognition-lab-PRL-" target="_blank" class="proj-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- All projects CTA -->
+      <div class="project-card reveal" style="transition-delay:0.2s; border-style: dashed; justify-content: center; align-items: center; text-align: center; min-height: 200px;">
+        <div style="font-size:2rem; margin-bottom:16px;">⚡</div>
+        <div class="project-name" style="font-size:1rem;">More on GitHub</div>
+        <div class="project-desc" style="text-align:center;">View all repositories and open source contributions</div>
+        <div class="project-links" style="justify-content:center; margin-top:20px;">
+          <a href="https://github.com/Sajjad-7H" target="_blank" class="proj-link">
+            View All Repos →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="reveal">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="contact-tagline">Let's Build<br>Something <span>Great.</span></h2>
+        <p class="contact-text">Open to full-time roles, freelance projects, and collaboration. Drop a message and I'll get back to you!</p>
+        <div class="contact-links">
+          <a href="mailto:bs687531@gmail.com" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            bs687531@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/sajjad-hosen-emon-590ba6337" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            linkedin.com/in/sajjad-hosen-emon
+          </a>
+          <a href="https://github.com/Sajjad-7H" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </div>
+            github.com/Sajjad-7H
+          </a>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <form class="contact-form" id="contact-form" action="https://formsubmit.co/bs687531@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New portfolio message">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" id="contact-name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="contact-email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-input" id="contact-message" name="message" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button class="btn-neon primary" type="submit">
+            Send Message →
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">SHE.</div>
+  <div class="footer-text">© 2025 Sajjad Hosen Emon · Built with ❤️ from Chittagong, Bangladesh</div>
+  <div class="footer-text" style="color:var(--neon); font-size:0.65rem;">Available for Work 🟢</div>
+</footer>
+<!-- SUPPORT ASSISTANT -->
+<button id="support-toggle" type="button" aria-label="Open support assistant">AI</button>
+<div id="support-widget" aria-label="Support assistant">
+  <div class="support-head">
+    <div>
+      <div class="support-title">Support Assistant</div>
+      <div class="support-subtitle">Auto replies from admin settings</div>
+    </div>
+    <button class="support-close" id="support-close" type="button">X</button>
+  </div>
+  <div id="support-messages"></div>
+  <form id="support-form">
+    <input id="support-input" type="text" placeholder="Ask anything..." autocomplete="off" required>
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+function animRing(){
+  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+  cursorRing.style.left=rx+'px'; cursorRing.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='6px'; cursor.style.height='6px'; cursorRing.style.width='50px'; cursorRing.style.height='50px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; cursorRing.style.width='36px'; cursorRing.style.height='36px'; });
+});
+
+// NAV ACTIVE (desktop + mobile)
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const mobNavItems = document.querySelectorAll('.mob-nav-item');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 200) cur = s.id; });
+  navItems.forEach(n => {
+    n.classList.remove('active');
+    if(n.getAttribute('href') === '#'+cur) n.classList.add('active');
+  });
+  mobNavItems.forEach(n => {
+    n.classList.remove('active');
+    if(n.getAttribute('href') === '#'+cur) n.classList.add('active');
+  });
+});
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+reveals.forEach(r => obs.observe(r));
+
+// CONTACT EMAIL
+// FormSubmit sends the contact form directly to bs687531@gmail.com after first-time email activation.
+// ADMIN SYSTEM
+const ADMIN_EMAIL = ['admin', 'gmail.com'].join('@');
+const ADMIN_PASS = ['ad', 'min'].join('');
+const ADMIN_STORE = 'sajjadPortfolioAdminData';
+const adminToggle = document.getElementById('admin-toggle');
+const adminPanel = document.getElementById('admin-panel');
+const adminClose = document.getElementById('admin-close');
+const adminLogin = document.getElementById('admin-login');
+const adminTools = document.getElementById('admin-tools');
+const adminEditBtn = document.getElementById('admin-edit-mode');
+const adminSaveBtn = document.getElementById('admin-save');
+const adminApplyBtn = document.getElementById('admin-apply');
+const adminText = document.getElementById('admin-text');
+const adminLink = document.getElementById('admin-link');
+const adminTarget = document.getElementById('admin-target');
+const adminStatus = document.getElementById('admin-status');
+const editableSelectors = 'nav a,#mobile-nav a,main *:not(svg):not(path):not(polyline):not(rect),footer *:not(svg):not(path)';
+let adminLoggedIn = sessionStorage.getItem('portfolioAdminLoggedIn') === 'true';
+let adminEditMode = false;
+let selectedAdminEl = null;
+
+function adminShowStatus(message) {
+  adminStatus.textContent = message;
+  clearTimeout(adminShowStatus.timer);
+  adminShowStatus.timer = setTimeout(() => adminStatus.textContent = '', 2500);
+}
+
+function adminPathFor(el) {
+  const parts = [];
+  while (el && el.nodeType === 1 && el !== document.body) {
+    let selector = el.tagName.toLowerCase();
+    if (el.id) selector += '#' + el.id;
+    if (el.className && typeof el.className === 'string') selector += '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.');
+    const parent = el.parentElement;
+    if (parent) selector += `:nth-child(${Array.from(parent.children).indexOf(el) + 1})`;
+    parts.unshift(selector);
+    el = parent;
+  }
+  return parts.join(' > ');
+}
+
+function adminHasEditableContent(el) {
+  if (!el || el.closest('#admin-panel') || el.closest('#admin-toggle')) return false;
+  if (el.matches('script,style,svg,path,rect,polyline')) return false;
+  if (el.matches('a,input,textarea,button,label')) return true;
+  const ownText = Array.from(el.childNodes).some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+  return ownText || el.classList.contains('code-body');
+}
+
+function adminMarkEditable() {
+  let index = 0;
+  document.querySelectorAll(editableSelectors).forEach(el => {
+    if (!adminHasEditableContent(el)) return;
+    el.dataset.adminEditable = 'true';
+    if (!el.dataset.adminId) el.dataset.adminId = 'admin-item-' + index;
+    index += 1;
+  });
+}
+
+function adminSetLoggedIn(state) {
+  adminLoggedIn = state;
+  sessionStorage.setItem('portfolioAdminLoggedIn', state ? 'true' : 'false');
+  adminLogin.style.display = state ? 'none' : 'block';
+  adminTools.style.display = state ? 'block' : 'none';
+  if (state) adminMarkEditable();
+}
+
+function adminDefaultData() {
+  return { text: {}, html: {}, links: {}, colors: {}, additions: { projects: [], skills: [], experience: [], education: [], contacts: [] }, backgroundPhoto: '', assistant: { fallback: 'Thanks for your message. Please share your name, email, and details. I will get back to you soon.', replies: [ { keywords: 'hello, hi, salam, assalamualaikum', reply: 'Hello! How can I help you today?' }, { keywords: 'hire, work, project, job', reply: 'Sure. Please tell me about your project, budget, and deadline. I can help with web apps, portfolio sites, and full-stack work.' }, { keywords: 'email, contact, phone', reply: 'You can contact me through this form or email me at bs687531@gmail.com.' } ] } };
+}
+
+function adminData() {
+  const defaults = adminDefaultData();
+  try {
+    const parsed = JSON.parse(localStorage.getItem(ADMIN_STORE)) || {};
+    return {
+      ...defaults,
+      ...parsed,
+      additions: { ...defaults.additions, ...(parsed.additions || {}) }
+    };
+  } catch (e) {
+    return defaults;
+  }
+}
+
+function adminSaveData(data) {
+  localStorage.setItem(ADMIN_STORE, JSON.stringify(data));
+}
+
+function adminEscape(value) {
+  return String(value || '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+}
+
+function adminTechPills(techText) {
+  return String(techText || '').split(',').map(item => item.trim()).filter(Boolean).map(item => `<span class="tech-pill">${adminEscape(item)}</span>`).join('');
+}
+
+function adminGithubIcon() {
+  return '<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>';
+}
+
+function adminAppendAndObserve(container, htmlText, beforeNode = null) {
+  if (!container) return null;
+  const template = document.createElement('template');
+  template.innerHTML = htmlText.trim();
+  const node = template.content.firstElementChild;
+  if (beforeNode) container.insertBefore(node, beforeNode);
+  else container.appendChild(node);
+  node.classList.add('visible');
+  if (typeof obs !== 'undefined') obs.observe(node);
+  adminMarkEditable();
+  return node;
+}
+
+function adminFindProjectCta() {
+  return Array.from(document.querySelectorAll('.projects-grid .project-card')).find(card => card.textContent.includes('More on GitHub'));
+}
+
+function adminAppendProject(htmlText) {
+  const grid = document.querySelector('.projects-grid');
+  return adminAppendAndObserve(grid, htmlText, adminFindProjectCta());
+}
+
+function adminRenderProject(item, index) {
+  const projectCount = document.querySelectorAll('.projects-grid .project-num').length + 1;
+  const githubLink = item.github ? `<a href="${adminEscape(item.github)}" target="_blank" class="proj-link">${adminGithubIcon()} GitHub</a>` : '';
+  const liveLink = item.live ? `<a href="${adminEscape(item.live)}" target="_blank" class="proj-link">Live Demo</a>` : '';
+  return `<div class="project-card reveal" data-admin-added="project">
+    <div class="project-num">Project / ${String(projectCount).padStart(2, '0')}</div>
+    <div class="project-name">${adminEscape(item.name || 'New Project')}</div>
+    <div class="project-desc">${adminEscape(item.desc || 'Project description')}</div>
+    <div class="project-tech">${adminTechPills(item.tech || 'HTML, CSS, JavaScript')}</div>
+    <div class="project-links">${githubLink}${liveLink}</div>
+  </div>`;
+}
+
+function adminRenderSkill(item) {
+  const tags = String(item.tags || '').split(',').map(tag => tag.trim()).filter(Boolean).map(tag => `<span class="skill-tag">${adminEscape(tag)}</span>`).join('');
+  return `<div class="skill-card reveal" data-admin-added="skill">
+    <div class="skill-card-title"><div class="skill-icon-badge">${adminEscape(item.icon || '+')}</div>${adminEscape(item.title || 'New Skill')}</div>
+    <div class="skill-tags">${tags || '<span class="skill-tag">New Skill</span>'}</div>
+  </div>`;
+}
+
+function adminRenderExperience(item) {
+  return `<div class="timeline-item reveal" data-admin-added="experience">
+    <div class="tl-role">${adminEscape(item.role || 'New Role')}</div>
+    <div class="tl-company">${adminEscape(item.company || 'Company')}</div>
+    <div class="tl-date">${adminEscape(item.date || 'Date')}</div>
+    <div class="tl-desc">${adminEscape(item.desc || 'Experience description')}</div>
+  </div>`;
+}
+
+function adminRenderEducation(item) {
+  return `<div class="edu-card reveal" data-year="${adminEscape(item.year || 'New')}" data-admin-added="education">
+    <div class="edu-degree">${adminEscape(item.degree || 'New Education')}</div>
+    <div class="edu-school">${adminEscape(item.school || 'School / University')}</div>
+    <div class="edu-year">${adminEscape(item.year || 'Year')}</div>
+    <span class="edu-badge">${adminEscape(item.badge || 'Completed')}</span>
+  </div>`;
+}
+
+function adminRenderContact(item) {
+  return `<a href="${adminEscape(item.url || '#')}" target="_blank" class="contact-link" data-admin-added="contact">
+    <div class="contact-link-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 010 5.656l-2 2a4 4 0 01-5.656-5.656l1.172-1.172"/><path stroke-linecap="round" stroke-linejoin="round" d="M10.172 13.828a4 4 0 010-5.656l2-2a4 4 0 015.656 5.656l-1.172 1.172"/></svg></div>
+    ${adminEscape(item.label || 'New Contact')}
+  </a>`;
+}
+
+function adminApplyBackground(photo) {
+  if (photo) {
+    document.documentElement.style.setProperty('--admin-bg-photo', `url("${photo}")`);
+    document.body.classList.add('admin-bg-photo');
+  } else {
+    document.documentElement.style.removeProperty('--admin-bg-photo');
+    document.body.classList.remove('admin-bg-photo');
+  }
+}
+
+function adminRenderAdditions() {
+  document.querySelectorAll('[data-admin-added]').forEach(el => el.remove());
+  const data = adminData();
+  (data.additions.skills || []).forEach(item => adminAppendAndObserve(document.querySelector('.skills-grid'), adminRenderSkill(item)));
+  (data.additions.experience || []).forEach(item => adminAppendAndObserve(document.querySelector('.timeline'), adminRenderExperience(item)));
+  (data.additions.education || []).forEach(item => adminAppendAndObserve(document.querySelector('.edu-grid'), adminRenderEducation(item)));
+  (data.additions.projects || []).forEach((item, index) => adminAppendProject(adminRenderProject(item, index)));
+  (data.additions.contacts || []).forEach(item => adminAppendAndObserve(document.querySelector('.contact-links'), adminRenderContact(item)));
+  adminApplyBackground(data.backgroundPhoto);
+}
+
+function adminPushAddition(type, item) {
+  const data = adminData();
+  data.additions[type].push(item);
+  adminSaveData(data);
+  adminRenderAdditions();
+  adminShowStatus('New item added successfully.');
+}
+
+function adminInputValue(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function adminClearInputs(ids) {
+  ids.forEach(id => document.getElementById(id).value = '');
+}
+
+function adminSetupAddForms() {
+  document.getElementById('add-project-btn').addEventListener('click', () => {
+    const ids = ['add-project-name', 'add-project-desc', 'add-project-tech', 'add-project-github', 'add-project-live'];
+    if (!adminInputValue('add-project-name')) { adminShowStatus('Project name required.'); return; }
+    adminPushAddition('projects', { name: adminInputValue('add-project-name'), desc: adminInputValue('add-project-desc'), tech: adminInputValue('add-project-tech'), github: adminInputValue('add-project-github'), live: adminInputValue('add-project-live') });
+    adminClearInputs(ids);
+  });
+
+  document.getElementById('add-skill-btn').addEventListener('click', () => {
+    const ids = ['add-skill-icon', 'add-skill-title', 'add-skill-tags'];
+    if (!adminInputValue('add-skill-title')) { adminShowStatus('Skill title required.'); return; }
+    adminPushAddition('skills', { icon: adminInputValue('add-skill-icon'), title: adminInputValue('add-skill-title'), tags: adminInputValue('add-skill-tags') });
+    adminClearInputs(ids);
+  });
+
+  document.getElementById('add-exp-btn').addEventListener('click', () => {
+    const ids = ['add-exp-role', 'add-exp-company', 'add-exp-date', 'add-exp-desc'];
+    if (!adminInputValue('add-exp-role')) { adminShowStatus('Role title required.'); return; }
+    adminPushAddition('experience', { role: adminInputValue('add-exp-role'), company: adminInputValue('add-exp-company'), date: adminInputValue('add-exp-date'), desc: adminInputValue('add-exp-desc') });
+    adminClearInputs(ids);
+  });
+
+  document.getElementById('add-edu-btn').addEventListener('click', () => {
+    const ids = ['add-edu-degree', 'add-edu-school', 'add-edu-year', 'add-edu-badge'];
+    if (!adminInputValue('add-edu-degree')) { adminShowStatus('Education title required.'); return; }
+    adminPushAddition('education', { degree: adminInputValue('add-edu-degree'), school: adminInputValue('add-edu-school'), year: adminInputValue('add-edu-year'), badge: adminInputValue('add-edu-badge') });
+    adminClearInputs(ids);
+  });
+
+  document.getElementById('add-contact-btn').addEventListener('click', () => {
+    const ids = ['add-contact-label', 'add-contact-url'];
+    if (!adminInputValue('add-contact-label')) { adminShowStatus('Contact label required.'); return; }
+    adminPushAddition('contacts', { label: adminInputValue('add-contact-label'), url: adminInputValue('add-contact-url') });
+    adminClearInputs(ids);
+  });
+
+  document.getElementById('admin-bg-upload').addEventListener('change', event => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const data = adminData();
+      data.backgroundPhoto = reader.result;
+      adminSaveData(data);
+      adminApplyBackground(reader.result);
+      adminShowStatus('Background photo updated.');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('admin-bg-remove').addEventListener('click', () => {
+    const data = adminData();
+    data.backgroundPhoto = '';
+    adminSaveData(data);
+    adminApplyBackground('');
+    document.getElementById('admin-bg-upload').value = '';
+    adminShowStatus('Background photo removed.');
+  });
+}
+function adminApplyStoredData() {
+  const data = adminData();
+  Object.entries(data.colors || {}).forEach(([name, value]) => document.documentElement.style.setProperty(name, value));
+  adminRenderAdditions();
+  adminMarkEditable();
+  document.querySelectorAll('[data-admin-id]').forEach(el => {
+    const id = el.dataset.adminId;
+    if (Object.prototype.hasOwnProperty.call(data.html || {}, id)) el.innerHTML = data.html[id];
+    else if (Object.prototype.hasOwnProperty.call(data.text || {}, id)) el.textContent = data.text[id];
+    if (el.matches('a') && data.links && data.links[id]) el.href = data.links[id];
+    if ((el.matches('input,textarea')) && data.text && data.text[id]) el.placeholder = data.text[id];
+  });
+}
+
+function adminLoadColorPickers() {
+  const data = adminData();
+  document.querySelectorAll('#admin-panel input[type="color"]').forEach(input => {
+    const varName = input.dataset.var;
+    const current = data.colors[varName] || getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    input.value = /^#[0-9a-f]{6}$/i.test(current) ? current : '#00f5ff';
+    input.addEventListener('input', () => {
+      const saved = adminData();
+      saved.colors[varName] = input.value;
+      document.documentElement.style.setProperty(varName, input.value);
+      adminSaveData(saved);
+    });
+  });
+}
+
+function adminSelectElement(el) {
+  if (!adminEditMode || !el || !el.dataset.adminEditable) return;
+  if (selectedAdminEl) selectedAdminEl.classList.remove('admin-selected');
+  selectedAdminEl = el;
+  selectedAdminEl.classList.add('admin-selected');
+  adminText.value = el.matches('input,textarea') ? el.placeholder : el.innerText.trim();
+  adminLink.value = el.matches('a') ? el.href : '';
+  adminLink.disabled = !el.matches('a');
+  adminTarget.textContent = 'Selected: ' + el.tagName.toLowerCase() + (el.className ? ' .' + String(el.className).trim().split(/\s+/)[0] : '');
+}
+
+document.addEventListener('click', event => {
+  if (!adminEditMode || event.target.closest('#admin-panel') || event.target.closest('#admin-toggle')) return;
+  const target = event.target.closest('[data-admin-editable="true"]');
+  if (target) {
+    event.preventDefault();
+    event.stopPropagation();
+    adminSelectElement(target);
+  }
+}, true);
+
+adminToggle.addEventListener('click', () => adminPanel.classList.toggle('open'));
+adminClose.addEventListener('click', () => adminPanel.classList.remove('open'));
+adminLogin.addEventListener('submit', event => {
+  event.preventDefault();
+  const email = document.getElementById('admin-email').value.trim();
+  const pass = document.getElementById('admin-pass').value.trim();
+  if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+    adminSetLoggedIn(true);
+    adminShowStatus('Login successful.');
+  } else {
+    alert('Wrong admin email or password.');
+  }
+});
+
+adminEditBtn.addEventListener('click', () => {
+  adminEditMode = !adminEditMode;
+  document.body.classList.toggle('admin-mode', adminEditMode);
+  adminEditBtn.textContent = adminEditMode ? 'Edit Mode: On' : 'Edit Mode: Off';
+  adminMarkEditable();
+});
+
+adminApplyBtn.addEventListener('click', () => {
+  if (!selectedAdminEl) { adminShowStatus('Please select an item first.'); return; }
+  const id = selectedAdminEl.dataset.adminId;
+  const data = adminData();
+  if (selectedAdminEl.matches('input,textarea')) {
+    selectedAdminEl.placeholder = adminText.value;
+    data.text[id] = adminText.value;
+  } else if (selectedAdminEl.classList.contains('code-body')) {
+    selectedAdminEl.innerHTML = '<pre><code>' + adminText.value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code></pre>';
+    data.html[id] = selectedAdminEl.innerHTML;
+  } else {
+    Array.from(selectedAdminEl.childNodes).forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) node.textContent = ' ' + adminText.value + ' ';
+    });
+    if (!Array.from(selectedAdminEl.childNodes).some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
+      selectedAdminEl.textContent = adminText.value;
+    }
+    data.text[id] = adminText.value;
+  }
+  if (selectedAdminEl.matches('a') && adminLink.value.trim()) {
+    selectedAdminEl.href = adminLink.value.trim();
+    data.links[id] = adminLink.value.trim();
+  }
+  adminSaveData(data);
+  adminShowStatus('Change applied and saved.');
+});
+
+adminSaveBtn.addEventListener('click', () => adminShowStatus('All admin changes are saved in this browser.'));
+document.getElementById('admin-logout').addEventListener('click', () => {
+  adminSetLoggedIn(false);
+  adminEditMode = false;
+  document.body.classList.remove('admin-mode');
+  adminPanel.classList.remove('open');
+});
+document.getElementById('admin-reset').addEventListener('click', () => {
+  if (confirm('Reset all admin changes?')) {
+    localStorage.removeItem(ADMIN_STORE);
+    location.reload();
+  }
+});
+document.getElementById('admin-export').addEventListener('click', () => {
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('#admin-panel,#admin-toggle').forEach(el => el.remove());
+  const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'edited-portfolio.html';
+  link.click();
+  URL.revokeObjectURL(link.href);
+});
+
+adminMarkEditable();
+adminApplyStoredData();
+adminLoadColorPickers();
+adminSetupAddForms();
+adminSetupAssistantForms();
+adminSetLoggedIn(adminLoggedIn);
+
+// SUPPORT ASSISTANT
+const supportToggle = document.getElementById('support-toggle');
+const supportWidget = document.getElementById('support-widget');
+const supportClose = document.getElementById('support-close');
+const supportMessages = document.getElementById('support-messages');
+const supportForm = document.getElementById('support-form');
+const supportInput = document.getElementById('support-input');
+
+function assistantConfig() {
+  const data = adminData();
+  return data.assistant || adminDefaultData().assistant;
+}
+
+function assistantSaveConfig(config) {
+  const data = adminData();
+  data.assistant = config;
+  adminSaveData(data);
+}
+
+function assistantAddMessage(text, who = 'bot') {
+  if (!supportMessages) return;
+  const msg = document.createElement('div');
+  msg.className = 'support-msg ' + who;
+  msg.textContent = text;
+  supportMessages.appendChild(msg);
+  supportMessages.scrollTop = supportMessages.scrollHeight;
+}
+
+function assistantReplyFor(message) {
+  const config = assistantConfig();
+  const lower = message.toLowerCase();
+  const match = (config.replies || []).find(item => String(item.keywords || '').split(',').some(keyword => {
+    const clean = keyword.trim().toLowerCase();
+    return clean && lower.includes(clean);
+  }));
+  return match ? match.reply : config.fallback;
+}
+
+function assistantOpen() {
+  supportWidget.classList.add('open');
+  if (!supportMessages.dataset.started) {
+    assistantAddMessage('Hi, I am the support assistant. Ask me anything.');
+    supportMessages.dataset.started = 'true';
+  }
+  supportInput.focus();
+}
+
+if (supportToggle && supportWidget && supportForm) {
+  supportToggle.addEventListener('click', assistantOpen);
+  supportClose.addEventListener('click', () => supportWidget.classList.remove('open'));
+  supportForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const text = supportInput.value.trim();
+    if (!text) return;
+    assistantAddMessage(text, 'user');
+    supportInput.value = '';
+    setTimeout(() => assistantAddMessage(assistantReplyFor(text), 'bot'), 350);
+  });
+}
+
+function adminRenderAssistantReplies() {
+  const list = document.getElementById('assistant-reply-list');
+  const fallbackInput = document.getElementById('assistant-fallback');
+  if (!list || !fallbackInput) return;
+  const config = assistantConfig();
+  fallbackInput.value = config.fallback || '';
+  list.innerHTML = '';
+  (config.replies || []).forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'admin-reply-item';
+    row.innerHTML = `<div class="admin-reply-key">${adminEscape(item.keywords)}</div><div class="admin-reply-text">${adminEscape(item.reply)}</div><div class="admin-actions"><button class="admin-btn" type="button" data-edit-reply="${index}">Edit</button><button class="admin-btn danger" type="button" data-delete-reply="${index}">Delete</button></div>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('[data-delete-reply]').forEach(button => {
+    button.addEventListener('click', () => {
+      const config = assistantConfig();
+      config.replies.splice(Number(button.dataset.deleteReply), 1);
+      assistantSaveConfig(config);
+      adminRenderAssistantReplies();
+      adminShowStatus('Assistant reply deleted.');
+    });
+  });
+  list.querySelectorAll('[data-edit-reply]').forEach(button => {
+    button.addEventListener('click', () => {
+      const config = assistantConfig();
+      const item = config.replies[Number(button.dataset.editReply)];
+      document.getElementById('assistant-keywords').value = item.keywords;
+      document.getElementById('assistant-reply').value = item.reply;
+      config.replies.splice(Number(button.dataset.editReply), 1);
+      assistantSaveConfig(config);
+      adminRenderAssistantReplies();
+      adminShowStatus('Reply loaded for editing. Change it and press Add Reply.');
+    });
+  });
+}
+
+function adminSetupAssistantForms() {
+  const addBtn = document.getElementById('assistant-add-reply');
+  const fallbackBtn = document.getElementById('assistant-save-fallback');
+  if (!addBtn || !fallbackBtn) return;
+  adminRenderAssistantReplies();
+  addBtn.addEventListener('click', () => {
+    const keywords = document.getElementById('assistant-keywords').value.trim();
+    const reply = document.getElementById('assistant-reply').value.trim();
+    if (!keywords || !reply) { adminShowStatus('Keywords and reply are required.'); return; }
+    const config = assistantConfig();
+    config.replies.push({ keywords, reply });
+    assistantSaveConfig(config);
+    document.getElementById('assistant-keywords').value = '';
+    document.getElementById('assistant-reply').value = '';
+    adminRenderAssistantReplies();
+    adminShowStatus('Assistant reply saved.');
+  });
+  fallbackBtn.addEventListener('click', () => {
+    const config = assistantConfig();
+    config.fallback = document.getElementById('assistant-fallback').value.trim() || config.fallback;
+    assistantSaveConfig(config);
+    adminShowStatus('Default assistant reply saved.');
+  });
+}
+// PDF DOWNLOAD
+function downloadPDF() {
+  const btn = document.getElementById('pdf-btn');
+  btn.textContent = '⏳ Generating...';
+  btn.disabled = true;
+
+  const opt = {
+    margin: 0,
+    filename: 'Sajjad_Hosen_Emon_Portfolio.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 1.5, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  const content = document.getElementById('portfolio-content');
+  html2pdf().set(opt).from(content).save().then(() => {
+    btn.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg> Download PDF`;
+    btn.disabled = false;
+  });
+}
+</script>
+</body>
+</html>
