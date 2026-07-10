@@ -362,35 +362,94 @@
   }
 
   /* PROJECTS */
-  #projects { background: var(--bg); }
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 24px; }
+  #projects {
+    background:
+      radial-gradient(circle at 24% 22%, rgba(0,245,255,0.09), transparent 24%),
+      radial-gradient(circle at 72% 38%, rgba(0,255,136,0.07), transparent 26%),
+      radial-gradient(circle at 50% 82%, rgba(123,0,255,0.1), transparent 30%),
+      var(--bg);
+    overflow: hidden;
+  }
+  #projects::before {
+    content: ''; position: absolute; inset: 8% 4% 4% 4%;
+    background-image:
+      radial-gradient(circle, rgba(0,245,255,0.22) 0 2px, transparent 3px),
+      radial-gradient(circle, rgba(0,255,136,0.16) 0 1px, transparent 3px),
+      radial-gradient(circle, rgba(123,0,255,0.16) 0 2px, transparent 4px);
+    background-size: 38px 38px, 62px 62px, 91px 91px;
+    background-position: 0 0, 18px 28px, 44px 10px;
+    opacity: 0.34;
+    filter: blur(0.4px);
+    pointer-events: none;
+  }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(5, minmax(150px,1fr)); gap: 34px 24px;
+    position: relative; z-index: 1; isolation: isolate; perspective: 1200px;
+    padding: 34px 0 20px;
+  }
+  .projects-grid::before {
+    content: ''; position: absolute; inset: 9% 4% 12% 4%; z-index: -1;
+    border: 1px solid rgba(0,245,255,0.12); border-radius: 18px;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+    transform: rotateX(64deg) translateY(34px);
+    transform-origin: center bottom;
+    box-shadow: inset 0 0 60px rgba(0,245,255,0.06);
+    pointer-events: none;
+  }
   .project-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 32px; transition: all 0.3s;
-    position: relative; overflow: hidden; display: flex; flex-direction: column;
+    background: rgba(5,10,15,0.72); border: 1px solid rgba(0,245,255,0.24);
+    border-radius: 8px; padding: 24px 18px 18px 42px;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+    position: relative; overflow: visible; display: flex; flex-direction: column;
+    min-height: 220px;
+    transform-style: preserve-3d;
+    transform: rotateX(10deg) rotateY(-9deg) translateZ(0);
+    box-shadow: 0 22px 42px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
   }
   .project-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at top left, rgba(0,245,255,0.05), transparent 60%);
-    opacity: 0; transition: opacity 0.3s;
+    content: ''; position: absolute; left: 16px; top: 26px;
+    width: calc(100% + 34px); height: 2px;
+    background: linear-gradient(90deg, var(--neon), rgba(0,255,136,0.78), transparent);
+    transform: translateZ(-1px) rotate(14deg);
+    transform-origin: left center;
+    opacity: 0.52;
+    box-shadow: 0 0 18px rgba(0,245,255,0.28);
+    pointer-events: none;
   }
-  .project-card:hover::before { opacity: 1; }
+  .project-card::after {
+    content: ''; position: absolute; left: 14px; top: 18px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--neon); border: 3px solid rgba(232,244,248,0.92);
+    box-shadow: 0 0 16px var(--neon), 0 0 34px rgba(0,245,255,0.45);
+    pointer-events: none;
+  }
+  .project-card:nth-child(even) { transform: rotateX(10deg) rotateY(8deg) translateY(34px); }
+  .project-card:nth-child(3n) { transform: rotateX(10deg) rotateY(-5deg) translateY(-18px); }
+  .project-card:nth-child(5n)::after { background: var(--neon2); box-shadow: 0 0 16px var(--neon2), 0 0 34px rgba(0,255,136,0.4); }
+  .project-card:nth-child(4n)::before { transform: translateZ(-1px) rotate(-16deg); }
   .project-card:hover {
-    border-color: rgba(0,245,255,0.35);
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.5), var(--glow);
+    background: rgba(13,26,38,0.92);
+    border-color: rgba(0,245,255,0.5);
+    transform: translateY(-10px) rotateX(0deg) rotateY(0deg) translateZ(28px);
+    box-shadow: 0 28px 56px rgba(0,0,0,0.5), var(--glow);
   }
   .project-num {
     font-size: 0.65rem; letter-spacing: 0.2em; color: var(--neon);
     text-transform: uppercase; margin-bottom: 14px; font-weight: 700;
+    position: relative; z-index: 2;
   }
   .project-name {
-    font-family: var(--font-display); font-weight: 800; font-size: 1.2rem;
+    font-family: var(--font-display); font-weight: 800; font-size: 1rem;
     color: var(--text); margin-bottom: 12px; line-height: 1.2;
+    position: relative; z-index: 2;
   }
-  .project-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; flex: 1; }
+  .project-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.7; flex: 1; position: relative; z-index: 2; }
   .project-tech {
     display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+    position: relative; z-index: 2;
   }
   .tech-pill {
     padding: 4px 12px; font-size: 0.65rem; letter-spacing: 0.08em;
@@ -399,6 +458,7 @@
   }
   .project-links {
     display: flex; gap: 12px; margin-top: 24px;
+    position: relative; z-index: 5;
   }
   .proj-link {
     font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -406,6 +466,7 @@
     display: flex; align-items: center; gap: 6px; transition: all 0.2s;
     padding: 8px 16px; border: 1px solid rgba(0,245,255,0.2);
     border-radius: 4px;
+    position: relative; z-index: 6; pointer-events: auto;
   }
   .proj-link:hover {
     background: rgba(0,245,255,0.1); box-shadow: var(--glow);
@@ -499,6 +560,10 @@
 
   /* ── RESPONSIVE BREAKPOINTS ── */
 
+  @media (max-width: 1100px) {
+    .projects-grid { grid-template-columns: repeat(3, minmax(190px, 1fr)); }
+  }
+
   /* Tablet */
   @media (max-width: 900px) {
     nav { display: none; }
@@ -517,6 +582,8 @@
 
     .hero-inner { grid-template-columns: 1fr; gap: 40px; }
     .hero-name { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+
+    .projects-grid { grid-template-columns: repeat(2, minmax(230px, 1fr)); }
 
     .contact-inner { grid-template-columns: 1fr; gap: 48px; }
     .contact-tagline { font-size: clamp(1.6rem, 6vw, 2.4rem); }
@@ -550,14 +617,38 @@
 
     .skills-grid { grid-template-columns: 1fr; }
     .edu-grid { grid-template-columns: 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding-left: 18px;
+      perspective: none;
+    }
+    .projects-grid::before {
+      left: 0; right: auto; top: 24px; bottom: 24px;
+      width: 2px; height: auto; border: 0; border-radius: 0;
+      background: linear-gradient(180deg, var(--neon), rgba(0,255,136,0.5), transparent);
+      transform: none;
+      box-shadow: 0 0 18px rgba(0,245,255,0.35);
+    }
 
     .timeline { padding-left: 28px; }
     .timeline-item::before { left: -36px; }
     .timeline-item { padding: 20px; }
 
     .skill-card { padding: 20px; }
-    .project-card { padding: 22px; }
+    .project-card,
+    .project-card:nth-child(even),
+    .project-card:nth-child(3n) {
+      padding: 22px 18px 18px 42px;
+      min-height: auto;
+      transform: none;
+    }
+    .project-card::before {
+      left: -18px; top: 28px; width: 34px;
+      transform: none;
+      background: linear-gradient(90deg, var(--neon), transparent);
+    }
+    .project-card:hover { transform: translateY(-6px); }
     .edu-card { padding: 22px; }
 
     .contact-inner { gap: 36px; }
@@ -1145,7 +1236,7 @@
           <span class="tech-pill">Canvas</span>
         </div>
         <div class="project-links">
-          <a href="https://github.com/Sajjad-7H/voice-particle-morph" target="_blank" class="btn-neon secondary">
+          <a href="https://github.com/Sajjad-7H/voice-particle-morph" target="_blank" class="proj-link">
             <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             GitHub
           </a>
