@@ -471,6 +471,87 @@
   .proj-link:hover {
     background: rgba(0,245,255,0.1); box-shadow: var(--glow);
   }
+  .project-orbit {
+    width: min(760px, 100%);
+    aspect-ratio: 2.1 / 1;
+    margin: -22px auto 48px;
+    position: relative;
+    z-index: 1;
+    perspective: 900px;
+  }
+  .orbit-core {
+    position: absolute; left: 50%; top: 50%;
+    width: 150px; height: 150px; border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(circle, rgba(0,245,255,0.18), rgba(5,10,15,0.76) 58%, rgba(0,245,255,0.04));
+    border: 1px solid rgba(0,245,255,0.35);
+    box-shadow: inset 0 0 28px rgba(0,245,255,0.18), 0 0 34px rgba(0,245,255,0.2);
+    text-align: center;
+  }
+  .orbit-core::before,
+  .orbit-core::after {
+    content: ''; position: absolute; inset: -18px; border-radius: 50%;
+    border: 1px dashed rgba(0,245,255,0.38);
+    animation: orbitSpin 16s linear infinite;
+  }
+  .orbit-core::after {
+    inset: -34px; border-color: rgba(0,255,136,0.22);
+    animation-duration: 24s; animation-direction: reverse;
+  }
+  .orbit-kicker {
+    font-size: 0.62rem; letter-spacing: 0.22em; color: var(--neon2);
+    text-transform: uppercase;
+  }
+  .orbit-title {
+    margin-top: 5px; font-family: var(--font-display); font-weight: 800;
+    font-size: 1rem; color: var(--text); line-height: 1.15;
+  }
+  .orbit-ring {
+    position: absolute; inset: 8% 6%;
+    border: 1px solid rgba(0,245,255,0.2);
+    border-radius: 50%;
+    transform: rotateX(62deg);
+    box-shadow: 0 0 30px rgba(0,245,255,0.12), inset 0 0 40px rgba(0,255,136,0.06);
+  }
+  .orbit-ring::before {
+    content: ''; position: absolute; inset: 10%;
+    border: 1px solid rgba(0,255,136,0.16); border-radius: 50%;
+  }
+  .orbit-node {
+    position: absolute;
+    width: 150px; min-height: 42px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(5,10,15,0.84);
+    border: 1px solid rgba(0,245,255,0.24);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35), 0 0 18px rgba(0,245,255,0.12);
+    color: var(--text);
+    font-size: 0.66rem;
+    line-height: 1.25;
+    transform: translate(-50%, -50%);
+    animation: nodeFloat 4s ease-in-out infinite;
+  }
+  .orbit-node::before {
+    content: ''; width: 12px; height: 12px; border-radius: 50%;
+    flex: none; background: var(--neon);
+    box-shadow: 0 0 14px var(--neon), 0 0 28px rgba(0,245,255,0.4);
+  }
+  .orbit-node:nth-child(odd)::before { background: var(--neon2); box-shadow: 0 0 14px var(--neon2), 0 0 28px rgba(0,255,136,0.34); }
+  .orbit-node.n1 { left: 50%; top: 5%; animation-delay: -0.2s; }
+  .orbit-node.n2 { left: 77%; top: 18%; animation-delay: -0.7s; }
+  .orbit-node.n3 { left: 91%; top: 50%; animation-delay: -1.2s; }
+  .orbit-node.n4 { left: 75%; top: 82%; animation-delay: -1.7s; }
+  .orbit-node.n5 { left: 50%; top: 95%; animation-delay: -2.2s; }
+  .orbit-node.n6 { left: 23%; top: 82%; animation-delay: -2.7s; }
+  .orbit-node.n7 { left: 9%; top: 50%; animation-delay: -3.2s; }
+  .orbit-node.n8 { left: 25%; top: 18%; animation-delay: -3.7s; }
+  @keyframes orbitSpin { to { transform: rotate(360deg); } }
+  @keyframes nodeFloat {
+    0%,100% { translate: 0 0; }
+    50% { translate: 0 -7px; }
+  }
 
   /* CONTACT */
   #contact { background: var(--bg2); }
@@ -584,6 +665,9 @@
     .hero-name { font-size: clamp(2.8rem, 10vw, 4.5rem); }
 
     .projects-grid { grid-template-columns: repeat(2, minmax(230px, 1fr)); }
+    .project-orbit { aspect-ratio: 1.45 / 1; margin-bottom: 36px; }
+    .orbit-node { width: 132px; font-size: 0.6rem; }
+    .orbit-core { width: 128px; height: 128px; }
 
     .contact-inner { grid-template-columns: 1fr; gap: 48px; }
     .contact-tagline { font-size: clamp(1.6rem, 6vw, 2.4rem); }
@@ -623,6 +707,23 @@
       padding-left: 18px;
       perspective: none;
     }
+    .project-orbit {
+      aspect-ratio: auto;
+      min-height: 430px;
+      margin: -10px auto 30px;
+    }
+    .orbit-ring { inset: 12% 3%; }
+    .orbit-core { width: 118px; height: 118px; }
+    .orbit-title { font-size: 0.85rem; }
+    .orbit-node { width: 126px; padding: 7px 9px; }
+    .orbit-node.n1 { left: 50%; top: 6%; }
+    .orbit-node.n2 { left: 80%; top: 20%; }
+    .orbit-node.n3 { left: 84%; top: 48%; }
+    .orbit-node.n4 { left: 76%; top: 76%; }
+    .orbit-node.n5 { left: 50%; top: 94%; }
+    .orbit-node.n6 { left: 24%; top: 76%; }
+    .orbit-node.n7 { left: 16%; top: 48%; }
+    .orbit-node.n8 { left: 20%; top: 20%; }
     .projects-grid::before {
       left: 0; right: auto; top: 24px; bottom: 24px;
       width: 2px; height: auto; border: 0; border-radius: 0;
@@ -1152,6 +1253,21 @@
     <div class="reveal">
       <div class="section-label">What I've Built</div>
       <h2 class="sec-heading">GitHub <span>Projects</span></h2>
+    </div>
+    <div class="project-orbit reveal" aria-label="Circular workflow of featured project names">
+      <div class="orbit-ring"></div>
+      <div class="orbit-core">
+        <div class="orbit-kicker">Workflow</div>
+        <div class="orbit-title">GitHub<br>Projects</div>
+      </div>
+      <div class="orbit-node n1">SMS Boomber</div>
+      <div class="orbit-node n2">IELTS Preparation</div>
+      <div class="orbit-node n3">Voice App</div>
+      <div class="orbit-node n4">Image For</div>
+      <div class="orbit-node n5">Particle Morph</div>
+      <div class="orbit-node n6">Emotion Detection</div>
+      <div class="orbit-node n7">Portfolio</div>
+      <div class="orbit-node n8">Evermart</div>
     </div>
     <div class="projects-grid">
 
